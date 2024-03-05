@@ -30,10 +30,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({ contact, onClose }) 
   };
 
   return (
-    <div className="modal" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+    <div className="contactModal" onClick={onClose}>
+      <div className="modalContent" onClick={e => e.stopPropagation()}>
         <span className="close" onClick={onClose}>&times;</span>
-        <div className='modal-content-inner'>
+        <div className='modalContentInner'>
           <img src={contact.photo} alt={contact.name} style={{ width: '100px', height: '100px' }} className='me-5' />
           <div>
             <h2>{contact.name}</h2>
@@ -41,8 +41,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ contact, onClose }) 
             <p>Email: {contact.email}</p>
           </div>
         </div>
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleDelete}>Delete</button>
+        <button onClick={handleEdit} className='btn btn-primary me-2'>Edit</button>
+        <button onClick={handleDelete} className='btn btn-danger'>Delete</button>
       </div>
     </div>
   );

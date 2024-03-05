@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addContact, editContact } from '../Contacts/contactThunks';
 
 interface ContactFormProps {
