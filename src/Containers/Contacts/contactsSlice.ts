@@ -1,29 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-
-interface Contact {
-  id: string;
-  name: string;
-  phone: string;
-  email: string;
-  photo: string;
-}
+import { Contact } from '../../types';
 
 interface ContactsState {
   contacts: Contact[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
 }
 
 const initialState: ContactsState = {
   contacts: [],
-  status: 'idle',
-  error: null,
 };
 
 export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async () => {
   const response = await axiosApi.get('/contacts.json');
-  return response.data;
+  const contacts = response.data ? Object.keys(response.data).map(key => ({
+    id: key,
+    ...response.data[key]
+  })) : [];
+  return contacts;
 });
 
 export const addContact = createAsyncThunk(
@@ -59,7 +52,6 @@ const contactsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.status = 'succeeded';
         state.contacts = action.payload;
       })
       .addCase(addContact.fulfilled, (state, action) => {
