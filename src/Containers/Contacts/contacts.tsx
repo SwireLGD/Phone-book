@@ -16,7 +16,7 @@ export const ContactsList = () => {
 
     const handleClick = (contact: Contact) => { 
         setSelectedContact(contact);
-        setIsModalOpen(true);
+        setIsModalOpen(true);        
     };
 
     const handleCloseModal = () => {
@@ -26,10 +26,11 @@ export const ContactsList = () => {
 
     return (
         <div>
-            <ul>
+            <ul className='list-group d-flex flex-column align-items-center'>
                 {contacts.map((contact) => (
-                <li key={contact.id} onClick={() => handleClick(contact)}>
-                    {contact.name} - {contact.phone} - {contact.email}
+                <li role="button" key={contact.id} onClick={() => handleClick(contact)} className='m-3 list-group-item w-50'>
+                    <img src={contact.photo || 'No image'} alt={contact.name} style={{ width: '100px', height: '100px', marginRight: '10px',}} />
+                    {contact.name}
                 </li>
                 ))}
             </ul>

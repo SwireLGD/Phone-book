@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
-import { addContact, editContact } from '../Contacts/contactsSlice';
+import { addContact, editContact } from '../Contacts/contactThunks';
 
 interface ContactFormProps {
   contact?: {
@@ -49,26 +49,46 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contact = null }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-      </div>
-      <div>
-        <label>Phone:</label>
-        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      </div>
-      <div>
-        <label>Photo URL:</label>
-        <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} />
-        {preview && <img src={preview} alt="Preview" style={{ width: '100px', height: '100px', marginTop: '10px' }} />}
-      </div>
-      <button type="submit">{contact ? 'Save Changes' : 'Add Contact'}</button>
-      <button type="button" onClick={() => navigate('/')}>Back to contacts</button>
-    </form>
+    <div className='container-fluid'>
+      <h2>{contact ? 'Edit Contact' : 'Add New Contact'}</h2>
+      <form onSubmit={handleSubmit} className='mt-2'>
+        <div className='d-flex align-items-center mb-2'>
+          <label>Name:</label>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required className='input-group-text ms-2' />
+        </div>
+        <div className='d-flex align-items-center mb-2'>
+          <label>Phone:</label>
+          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} required className='input-group-text ms-2' />
+        </div>
+        <div className='d-flex align-items-center mb-2'>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className='input-group-text ms-2' />
+        </div>
+        <div className='mb-3'>
+          <div className='d-flex align-items-center mb-2'>
+            <label>Photo URL:</label>
+            <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} className='input-group-text ms-2' />
+          </div>
+          <div style={{
+            width: '200px',
+            height: '200px',
+            marginTop: '10px',
+            border: '1px solid #ddd', 
+            backgroundColor: '#f0f0f0',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: '#ccc',
+            fontSize: '16px',
+            backgroundSize: 'cover',
+            backgroundImage: preview ? `url(${preview})` : 'none'
+          }}>
+            {!preview && 'No Preview'}
+          </div>
+        </div>
+          <button type="submit" className='btn btn-primary me-2'>{contact ? 'Save Changes' : 'Add Contact'}</button>
+          <button type="button" onClick={() => navigate('/')} className='btn btn-success'>Back to contacts</button>
+      </form>
+    </div>
   );
 };
